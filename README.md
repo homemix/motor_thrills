@@ -8,7 +8,7 @@ Motor Thrills is automobile shopping website which lists different types of vehi
 
 The data is scraped from different popular car sales and dealers. Instead of visiting multiple sites for the same search, users will have one stop website for different vendors and be able to make decision quickly.
 
-Lastly, this is a portfolio project in ALX Fullstack Software Engineering course.
+Lastly, this is a portfolio project in [Africa Leadership Experience (ALX) ](https://www.alxafrica.com/) Fullstack Software Engineering course.
 
 
 ### Project Objectives
