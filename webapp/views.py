@@ -1,8 +1,10 @@
 from django.shortcuts import render
+from .models import News
 
 
 def index(request):
-    return render(request, 'index.html', {'page_title': 'Home'})
+    news= News.objects.all()
+    return render(request, 'index.html', {'page_title': 'Home','news':news})
 
 
 def list_cars(request):

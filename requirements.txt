@@ -1,3 +1,6 @@
 python-decouple
 django
 psycopg2
+celery
+requests
+beautifulsoup4
