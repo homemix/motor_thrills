@@ -16,6 +16,7 @@ Lastly, this is a portfolio project in [Africa Leadership Experience (ALX) ](htt
 * Web scraping
 * Data processing and saving 
 * User authentication and authorization
+* Task Scheduling and management and Threads management
 * Project hosting and deployment.
 
 ### Technologies Used
@@ -26,6 +27,8 @@ Lastly, this is a portfolio project in [Africa Leadership Experience (ALX) ](htt
 * Bootstrap for front end presentation
 * Javascript (jquery) for front end data processing. 
 * Nginx, Gunicorn and related server  requirements 
+* celery for Task queue management and thread management.
+* Rabbit MQ server as the Task Management Broker
 * Any other related technologies as deemed right for use.
 
 
