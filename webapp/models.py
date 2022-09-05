@@ -8,16 +8,16 @@ class Company(models.Model):
     created_at = models.DateField('Created At', default=timezone.now, blank=True, null=True)
 
     def __str__(self):
-        return f'{self.name} {self.location}'
+        return f'{self.name} {self.website}'
 
 
 class Vehicle(models.Model):
     name = models.CharField('Name', max_length=255, blank=True, null=True)
-    YOM = models.IntegerField('Year of Make', null=True)
+    YOM = models.CharField('Year of Make', max_length=255, null=True)
     image = models.CharField('Image', max_length=255, blank=True, null=True)
-    price = models.IntegerField('Price', null=True)
-    model = models.CharField('Model', max_length=255, blank=True, null=True)
-    millage = models.IntegerField('Millage', null=True)
+    price = models.CharField('Price', max_length=255, null=True)
+    make = models.CharField('Model', max_length=255, blank=True, null=True)
+    millage = models.CharField('Millage', max_length=255, blank=True, null=True)
     more_info = models.TextField('More Information', blank=True, null=True)
     created_at = models.DateField('Created At', default=timezone.now, blank=True, null=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='com1pany', )
@@ -35,4 +35,4 @@ class News(models.Model):
     date_created = models.DateTimeField('Date Created', default=timezone.now, blank=True, null=True)
 
     def __str__(self):
-        return f'{self.title} {self.link}'
+        return f'{self.title} {self.pub_date}'
