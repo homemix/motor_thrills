@@ -72,7 +72,6 @@ def get_vehicle_details():
     company = Company.objects.filter(pk=2).first()
     try:
         print("Getting vehicle details...")
-        url2 = "https://www.autolist.com/listings#make=Acura&location=Nairobi,%2030&latitude=-1.2841&longitude=36.8155&radius=50&page=1"
         url = "https://www.beforward.jp/stocklist/make=94/sar=steering/sortkey=n/steering=Right/tp_country_id=27"
         response = requests.get(url)
         soup = BeautifulSoup(response.text, "lxml")
@@ -127,6 +126,71 @@ def get_vehicle_details():
         print("Error getting vehicle details: " + str(e))
 
     return save_vehicle_info(vehicles)
+
+
+def get_vehicle_details1():
+    """
+    Get vehicle details from https://autocj.co.jp/
+    :return: list of vehicle details
+    """
+    vehicle_company2 = []
+    #  company ID for auto cj   is 1
+    company = Company.objects.filter(pk=3).first()
+    try:
+        vehicle = {}
+        print("Getting vehicle details...")
+        url = "https://autocj.co.jp/used_cars?maker=6"
+        response = requests.get(url)
+        soup = BeautifulSoup(response.text, features="xml")
+        vehicle_details = soup.find_all("li", {'class': 'l-vblock'})
+        for vehicle_detail in vehicle_details:
+            vehicle_yom_models = vehicle_detail.find('div', {"class": 'v-detail'}).find("h2")
+            vehicle_more_details = vehicle_detail.find_all("table", {'class': 'v-table'})
+            vehicle_price = vehicle_detail.find("div", {'class': 'v-price'}).find('div').text
+            price = vehicle_price.split(' ')[2:][1]
+            vehicle_image = vehicle_detail.find("div", {'class': 'v-img'}).find('a').find('img')['src']
+            image = f'https://autocj.co.jp{vehicle_image}'
+            vehicle['price'] = price
+            vehicle['image'] = image
+            for vehicle_more_detail in vehicle_more_details:
+                more_details_trs = vehicle_more_detail.find("tbody").find_all('tr')
+                more_details = more_details_trs[1].find_all('td')
+                more_details_info = [i.text for i in more_details]
+                millage = more_details_info[6]
+                more_info = more_details_info[1]
+                vehicle['millage'] = millage
+                vehicle['more_info'] = more_info
+
+            yom_models = vehicle_yom_models.find_all("a", href=True)
+            yom_model = ''.join([i.text for i in yom_models])
+            # print(yom_model)
+            YOM = yom_model.split(' ')[0]
+            make = yom_model.split(' ')[1]
+            name = ' '.join([str(elem) for elem in yom_model.split(' ')[2:]])
+
+            vehicle['name'] = name
+            vehicle['YOM'] = YOM
+            vehicle['make'] = make
+            vehicle['company'] = company
+            # print(f' YOM: {YOM} make: {make} name: {name} millage: {millage} price: {price}')
+
+            vehicle_save = Vehicle(name=name, YOM=YOM, image=image,
+                                   price=price, make=make,
+                                   millage=millage,
+                                   more_info=more_info, company=company)
+
+            vehicle_save.save()
+
+        print("Finished getting vehicle news...")
+        print("--------------------------------")
+
+        # for info in vehicle_company2:
+        #     print(info)
+
+    except Exception as e:
+        print("Error getting vehicle details: " + str(e))
+
+    # return save_vehicle_info(vehicle_company2)
 
 
 def save_vehicle_info(vehicles):

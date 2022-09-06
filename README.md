@@ -31,5 +31,10 @@ Lastly, this is a portfolio project in [Africa Leadership Experience (ALX) ](htt
 * Rabbit MQ server as the Task Management Broker
 * Any other related technologies as deemed right for use.
 
+### Websites Used
+
+* https://autocj.co.jp/used_cars
+* https://www.beforward.jp/stocklist
+
 
 
