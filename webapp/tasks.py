@@ -76,18 +76,21 @@ def get_vehicle_details():
         response = requests.get(url)
         soup = BeautifulSoup(response.text, "lxml")
         vehicle_details = soup.find_all("tr", {"class": "stocklist-row"})
-        vehicle_price = soup.find_all("div", {"class": "price-col-vehicle-link-area"})
+
         vehicle = {}
-        for prices in vehicle_price:
-            price = prices.find("span", {"class": "price"}).text
-            vehicle['price'] = price
+
         for vehicle_detail in vehicle_details:
             vehicle_make_models = vehicle_detail.find_all("p", {"class": "make-model"})
             vehicle_specs = vehicle_detail.find_all("table", {"class": "basic-spec-row"})
             vehicle_images = vehicle_detail.find_all("td", {"class": "stocklist-col photo-col"})
+            vehicle_price = vehicle_detail.find_all("div", {"class": "price-col-vehicle-link-area"})
+            for prices in vehicle_price:
+                price = prices.find("span", {"class": "price"}).text
+                vehicle['price'] = price
+
             for vehicle_image in vehicle_images:
                 image = vehicle_image.find('img').get('src')[2:]
-                vehicle['image'] = image
+                vehicle['image'] = f'https://{image}'
 
             for spec in vehicle_specs:
                 millage = spec.find('td', {"class": "basic-spec-col basic-spec-col-bordered mileage"}).find('p', {
@@ -100,9 +103,8 @@ def get_vehicle_details():
                 engine = " ".join(engine).strip()
 
                 vehicle['millage'] = millage
-                vehicle['more_info'] = f'millage: {millage} engine: {engine} transmission: {transmission}'
-                vehicle['more_info'] = f'engine: {engine} transmission: {transmission}'
-                vehicle['more_info'] = f'engine: {engine} transmission: {transmission}'
+                more_info = f'millage: {millage} engine: {engine} transmission: {transmission}'
+                vehicle['more_info'] = more_info
 
             for vehicle_make_model in vehicle_make_models:
                 vehicle_name = vehicle_make_model.find('a', attrs={'class': 'vehicle-url-link'}).text
@@ -115,7 +117,16 @@ def get_vehicle_details():
                 vehicle['make'] = make
                 vehicle['name'] = name
                 vehicle['company'] = company
-            vehicles.append(vehicle)
+
+                # print(f'name:{name} YOM: {YOM} image:{image} price:{price} make:{make} millage:{millage}')
+                vehicle_save = Vehicle(name=name, YOM=YOM, image=f'https://{image}',
+                                       price=price, make=make,
+                                       millage=millage,
+                                       more_info=more_info, company=company)
+
+                vehicle_save.save()
+
+            # vehicles.append(vehicle)
 
         print("Finished getting vehicle details...")
         print("--------------------------------")
@@ -125,7 +136,7 @@ def get_vehicle_details():
     except Exception as e:
         print("Error getting vehicle details: " + str(e))
 
-    return save_vehicle_info(vehicles)
+    # return save_vehicle_info(vehicles)
 
 
 def get_vehicle_details1():
