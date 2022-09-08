@@ -48,6 +48,16 @@
                                         <option value="">No Make</option>
                                     {% endif %}
                                 </select>
+                                <select name="company" id="company">
+                                    <option value="" data-display="Company">Select Company</option>
+                                    {% if vehicle_company %}
+                                        {% for company in vehicle_company %}
+                                            <option value="{{ company }}">{{ company }}</option>
+                                        {% endfor %}
+                                    {% else %}
+                                        <option value="">No Company</option>
+                                    {% endif %}
+                                </select>
                                 <div class="car__filter__btn">
                                     <button type="submit" class="site-btn">Search</button>
                                 </div>
