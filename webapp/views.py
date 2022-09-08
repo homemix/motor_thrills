@@ -26,7 +26,7 @@ class VehicleListView(ListView):
     title = 'Cars'
     vehicle_make = Vehicle.objects.values_list('make', flat=True).distinct()
     vehicle_YOM = Vehicle.objects.values_list('YOM', flat=True).distinct().order_by('-YOM')
-    vehicle_company= Company.objects.values_list('name', flat=True).distinct()
+    vehicle_company= Company.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -45,10 +45,11 @@ class VehicleListView(ListView):
         elif YOM:
             return Vehicle.objects.filter(YOM__exact=YOM)
         elif company:
-            return Vehicle.objects.filter(company__name__exact=company)
+            return Vehicle.objects.filter(company_id=company)
         if make and YOM:
             return Vehicle.objects.filter(make__exact=make, YOM__exact=YOM)
-        return Vehicle.objects.order_by('-YOM')
+        else:
+            return Vehicle.objects.order_by('-YOM')
 
 
 def about_us(request):

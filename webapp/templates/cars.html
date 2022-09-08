@@ -52,7 +52,7 @@
                                     <option value="" data-display="Company">Select Company</option>
                                     {% if vehicle_company %}
                                         {% for company in vehicle_company %}
-                                            <option value="{{ company }}">{{ company }}</option>
+                                            <option value="{{ company.id }}">{{ company.name }}</option>
                                         {% endfor %}
                                     {% else %}
                                         <option value="">No Company</option>
