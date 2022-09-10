@@ -40,14 +40,16 @@ class VehicleListView(ListView):
         make = self.request.GET.get('make')
         YOM = self.request.GET.get('YOM')
         company = self.request.GET.get('company')
+        vehicle_name= self.request.GET.get('vehicle_name')
+
         if make:
             return Vehicle.objects.filter(make__exact=make)
         elif YOM:
             return Vehicle.objects.filter(YOM__exact=YOM)
         elif company:
             return Vehicle.objects.filter(company_id=company)
-        if make and YOM:
-            return Vehicle.objects.filter(make__exact=make, YOM__exact=YOM)
+        elif vehicle_name:
+            return Vehicle.objects.filter(name__iregex=vehicle_name)
         else:
             return Vehicle.objects.order_by('-YOM')
 

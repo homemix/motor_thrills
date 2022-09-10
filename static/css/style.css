@@ -388,10 +388,10 @@ ol {
 }
 
 .header__logo {
-	padding: 1px 0;
+	padding: 1px;
 }
 
-.header__logo a {
+.header__logo h3 {
 	display: inline-block;
 }
 
