@@ -53,7 +53,15 @@ class VehicleListView(ListView):
 
 
 def about_us(request):
-    return render(request, 'about.html', {'page_title': 'About us'})
+    vehicles_count= Vehicle.objects.count()
+    make_count = Vehicle.objects.values_list('make', flat=True).distinct().count()
+    company_count = Company.objects.count()
+    return render(request, 'about.html', {
+        'page_title': 'About us',
+        'vehicles_count': vehicles_count,
+        'make_count': make_count,
+        'company_count': company_count,
+    })
 
 
 def contact_us(request):
