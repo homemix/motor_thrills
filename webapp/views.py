@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from .models import *
 from .forms import NewUserForm, ReviewForm
+from django.contrib import messages
 
 
 def index(request):
@@ -70,6 +71,9 @@ def about_us(request):
         data = Review(user=user, rating=rating, review=review)
         data.save()
         return redirect('webapp:about_us')
+    else:
+        messages.error(request, 'Please login to submit review')
+
 
     return render(request, 'about.html', {
         'page_title': 'About us',
