@@ -14,8 +14,23 @@
                         <li><a href="{% url 'webapp:cars' %}">Cars</a></li>
                         <li><a href="{% url 'webapp:about_us' %} ">About</a></li>
                         <li><a href="{% url 'webapp:contact_us' %}">Contact</a></li>
+                        <li><a href="#">User Account</a>
+                            <ul class="dropdown">
+                                {% if user.is_authenticated %}
+                                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                                {% else %}
+                                    <li><a href="{% url 'login' %}">Login</a></li>
+                                    <li><a href="{% url 'webapp:register' %}">Register</a></li>
+                                {% endif %}
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
+                <div class="header__nav__widget">
+                    {% if user.is_authenticated %}
+                        <p>Username: {{ user.username }}</p>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>

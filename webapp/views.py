@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from .models import *
+from .forms import NewUserForm
 
 
 def index(request):
@@ -26,7 +27,7 @@ class VehicleListView(ListView):
     title = 'Cars'
     vehicle_make = Vehicle.objects.values_list('make', flat=True).distinct()
     vehicle_YOM = Vehicle.objects.values_list('YOM', flat=True).distinct().order_by('-YOM')
-    vehicle_company= Company.objects.all()
+    vehicle_company = Company.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -40,7 +41,7 @@ class VehicleListView(ListView):
         make = self.request.GET.get('make')
         YOM = self.request.GET.get('YOM')
         company = self.request.GET.get('company')
-        vehicle_name= self.request.GET.get('vehicle_name')
+        vehicle_name = self.request.GET.get('vehicle_name')
 
         if make:
             return Vehicle.objects.filter(make__exact=make)
@@ -55,7 +56,7 @@ class VehicleListView(ListView):
 
 
 def about_us(request):
-    vehicles_count= Vehicle.objects.count()
+    vehicles_count = Vehicle.objects.count()
     make_count = Vehicle.objects.values_list('make', flat=True).distinct().count()
     company_count = Company.objects.count()
     return render(request, 'about.html', {
@@ -68,3 +69,18 @@ def about_us(request):
 
 def contact_us(request):
     return render(request, 'contact.html', {'page_title': 'ContactUs'})
+
+
+def register_user(request):
+    if request.method == 'POST':
+        form = NewUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('webapp:cars')
+    else:
+        form = NewUserForm()
+
+    return render(request, 'registration/register.html', {
+        'page_title': 'Register',
+        'form': form,
+    })
