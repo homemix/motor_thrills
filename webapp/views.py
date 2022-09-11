@@ -74,7 +74,6 @@ def about_us(request):
     else:
         messages.error(request, 'Please login to submit review')
 
-
     return render(request, 'about.html', {
         'page_title': 'About us',
         'vehicles_count': vehicles_count,
