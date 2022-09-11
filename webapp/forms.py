@@ -1,6 +1,8 @@
 from django import forms
+from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import *
 
 
 class NewUserForm(UserCreationForm):
@@ -21,3 +23,17 @@ class NewUserForm(UserCreationForm):
             user.save()
         return user
 
+
+class ReviewForm(ModelForm):
+    class Meta:
+        model = Review
+        fields = ['review', 'rating', 'user']
+
+    def save(self, commit=True):
+        review = super(ReviewForm, self).save(commit=False)
+        review.user = self.cleaned_data["user"]
+        review.review = self.cleaned_data["review"]
+        review.rating = self.cleaned_data["rating"]
+        if commit:
+            review.save()
+        return review

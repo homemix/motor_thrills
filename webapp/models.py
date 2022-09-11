@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 class Company(models.Model):
@@ -36,3 +37,13 @@ class News(models.Model):
 
     def __str__(self):
         return f'{self.title} {self.pub_date}'
+
+
+class Review(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+    review = models.TextField('Review', blank=True, null=True)
+    rating = models.IntegerField('Rating', blank=True, null=True)
+    date_created = models.DateTimeField('Date Created', default=timezone.now, blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.review} {self.rating}'

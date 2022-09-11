@@ -1,7 +1,8 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from .models import *
-from .forms import NewUserForm
+from .forms import NewUserForm, ReviewForm
 
 
 def index(request):
@@ -59,11 +60,25 @@ def about_us(request):
     vehicles_count = Vehicle.objects.count()
     make_count = Vehicle.objects.values_list('make', flat=True).distinct().count()
     company_count = Company.objects.count()
+    review_form = ReviewForm()
+    reviews = Review.objects.all()
+
+    if request.method == 'POST' and request.user.is_authenticated:
+        user = request.user
+        rating = request.POST.get('rating')
+        review = request.POST.get('review')
+        data = Review(user=user, rating=rating, review=review)
+        data.save()
+        return redirect('webapp:about_us')
+
     return render(request, 'about.html', {
         'page_title': 'About us',
         'vehicles_count': vehicles_count,
         'make_count': make_count,
         'company_count': company_count,
+        'review_form': review_form,
+        'reviews': reviews,
+
     })
 
 

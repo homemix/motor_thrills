@@ -28,7 +28,8 @@
                 <div class="col-lg-12">
                     <div class="section-title about-title">
                         <h2>Wellcome to Motor Thrills Ltd <br/>Your one stop motor vehicle shopping center.</h2>
-                        <p>We List all major car dealers and aggregate their vehicle in one website for easy of comparison and quick decision-making without multiple clicks.</p>
+                        <p>We List all major car dealers and aggregate their vehicle in one website for easy of
+                            comparison and quick decision-making without multiple clicks.</p>
                     </div>
                 </div>
             </div>
@@ -52,7 +53,8 @@
                         <div class="about__feature__item">
                             <img src="{% static 'img/about/af-3.png' %}" alt="">
                             <h5>Latest Technology</h5>
-                            <p>We use the latest data aggregation and web scraping techniques to give you the best experience in car buying.</p>
+                            <p>We use the latest data aggregation and web scraping techniques to give you the best
+                                experience in car buying.</p>
                         </div>
                     </div>
                 </div>
@@ -93,24 +95,14 @@
                     </div>
                 </div>
                 <div class="col-lg-6 offset-lg-1 col-md-6">
-                    <form action="#" class="call__form">
+                    <form action="{% url 'webapp:about_us' %}" method="post" class="call__form">
+                        {% csrf_token %}
                         <div class="row">
                             <div class="col-lg-6">
-                                <input type="text" placeholder="Name">
+                                <input type="text" name="review" placeholder="Review">
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" placeholder="Email">
-                            </div>
-                            <div class="col-lg-6">
-                                <input type="text" placeholder="Phone">
-                            </div>
-                            <div class="col-lg-6">
-                                <select>
-                                    <option value="">Choose Our Services</option>
-                                    <option value="">Buy Cars</option>
-                                    <option value="">Sell Cars</option>
-                                    <option value="">Wash Cars</option>
-                                </select>
+                                <input type="number" name="rating" placeholder="Rating">
                             </div>
                         </div>
                         <button type="submit" class="site-btn">Submit Now</button>
@@ -136,90 +128,27 @@
             </div>
             <div class="row">
                 <div class="testimonial__slider owl-carousel">
-                    <div class="col-lg-6">
-                        <div class="testimonial__item">
-                            <div class="testimonial__item__author">
-                                <div class="testimonial__item__author__pic">
-                                    <img src="{% static 'img/testimonial/testimonial-1.png' %}" alt="">
-                                </div>
-                                <div class="testimonial__item__author__text">
-                                    <div class="rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
+                    {% if reviews %}
+                        {% for review in reviews %}
+                            <div class="col-lg-6">
+                                <div class="testimonial__item">
+                                    <div class="testimonial__item__author">
+                                        <div class="testimonial__item__author__pic">
+                                            <img src="{% static 'img/testimonial/testimonial-1.png' %}" alt="">
+                                        </div>
+                                        <div class="testimonial__item__author__text">
+                                            <div class="rating">
+
+                                                <i class="fa fa-star"></i>
+                                            </div>
+                                            <h5>{{ review.user.username }}</h5>
+                                        </div>
                                     </div>
-                                    <h5>John Smith /<span> CEO Colorlib</span></h5>
+                                    <p>{{ review.review }}</p>
                                 </div>
                             </div>
-                            <p>For one thing they usually step all over the hedges and plants on the side of someone’s
-                                house killing</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="testimonial__item">
-                            <div class="testimonial__item__author">
-                                <div class="testimonial__item__author__pic">
-                                    <img src="{% static 'img/testimonial/testimonial-2.png' %}" alt="">
-                                </div>
-                                <div class="testimonial__item__author__text">
-                                    <div class="rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <h5>Emma Sandoval /<span> Marketing Manager</span></h5>
-                                </div>
-                            </div>
-                            <p>It seems though that some of the biggest problems with the internet advertising trends
-                                are the lack of</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="testimonial__item">
-                            <div class="testimonial__item__author">
-                                <div class="testimonial__item__author__pic">
-                                    <img src="{% static 'img/testimonial/testimonial-1.png' %}" alt="">
-                                </div>
-                                <div class="testimonial__item__author__text">
-                                    <div class="rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <h5>John Smith /<span> CEO Colorlib</span></h5>
-                                </div>
-                            </div>
-                            <p>For one thing they usually step all over the hedges and plants on the side of someone’s
-                                house killing</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="testimonial__item">
-                            <div class="testimonial__item__author">
-                                <div class="testimonial__item__author__pic">
-                                    <img src="{% static 'img/testimonial/testimonial-2.png' %}" alt="">
-                                </div>
-                                <div class="testimonial__item__author__text">
-                                    <div class="rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <h5>Emma Sandoval /<span> Marketing Manager</span></h5>
-                                </div>
-                            </div>
-                            <p>It seems though that some of the biggest problems with the internet advertising trends
-                                are the lack of</p>
-                        </div>
-                    </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -276,7 +205,7 @@
                 <div class="col-lg-6 col-md-4 col-sm-6">
                     <a href="#" class="client__item">
                         <img src="{% static 'img/clients/beforward.png' %}" alt=""
-                        height="150" width="195">
+                             height="150" width="195">
                     </a>
                 </div>
             </div>
