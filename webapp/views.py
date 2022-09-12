@@ -64,15 +64,16 @@ def about_us(request):
     review_form = ReviewForm()
     reviews = Review.objects.all()
 
-    if request.method == 'POST' and request.user.is_authenticated:
-        user = request.user
-        rating = request.POST.get('rating')
-        review = request.POST.get('review')
-        data = Review(user=user, rating=rating, review=review)
-        data.save()
-        return redirect('webapp:about_us')
-    else:
-        messages.error(request, 'Please login to submit review')
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            user = request.user
+            rating = request.POST.get('rating')
+            review = request.POST.get('review')
+            data = Review(user=user, rating=rating, review=review)
+            data.save()
+            return redirect('webapp:about_us')
+        else:
+            messages.error(request, 'Please login to submit review')
 
     return render(request, 'about.html', {
         'page_title': 'About us',
