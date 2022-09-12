@@ -1,4 +1,6 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.admin.models import LogEntry, ADDITION
+
+from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from .models import *
@@ -71,6 +73,15 @@ def about_us(request):
             review = request.POST.get('review')
             data = Review(user=user, rating=rating, review=review)
             data.save()
+            CustomLogEntry(
+                user_id=request.user.id,
+                content_type_id=ContentType.objects.get_for_model(data).pk,
+                object_id=data.id,
+                object_repr=str(data),
+                action_flag=ADDITION,
+                log_type='Review',
+                change_message="Added review"
+            ).save()
             return redirect('webapp:about_us')
         else:
             messages.error(request, 'Please login to submit review')
@@ -103,3 +114,18 @@ def register_user(request):
         'page_title': 'Register',
         'form': form,
     })
+
+
+class LogEntryAdmin(ListView):
+    model = LogEntry
+    template_name = 'admin/logs.html'
+    context_object_name = 'logs'
+    title = 'Logs'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = self.title
+        return context
+
+    def get_queryset(self):
+        return CustomLogEntry.objects.all().order_by('-action_time')

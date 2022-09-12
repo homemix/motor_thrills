@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.contrib.admin.models import LogEntry
 
 
 class Company(models.Model):
@@ -47,3 +48,10 @@ class Review(models.Model):
 
     def __str__(self):
         return f'{self.review} {self.rating}'
+
+
+class CustomLogEntry(LogEntry):
+    log_type = models.CharField('Log Type', max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.user} {self.action_time} {self.change_message}'
