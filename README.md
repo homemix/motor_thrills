@@ -35,6 +35,7 @@ Lastly, this is a portfolio project in [Africa Leadership Experience (ALX) ](htt
 
 * https://autocj.co.jp/used_cars
 * https://www.beforward.jp/stocklist
+* https://www.autonews.com/automakers-suppliers
 
 ### Project Setup
 
