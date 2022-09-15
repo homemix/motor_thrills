@@ -10,6 +10,9 @@ The data is scraped from different popular car sales and dealers. Instead of vis
 
 Lastly, this is a portfolio project in [Africa Leadership Experience (ALX) ](https://www.alxafrica.com/) Fullstack Software Engineering course.
 
+### Project URL
+
+To access the web application, visit [Motor Thrills](http://141.95.42.125:82/) 
 
 ### Project Objectives
 
